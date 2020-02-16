@@ -1,6 +1,7 @@
 package com.jd.devopsselfservice.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Resource {
@@ -9,14 +10,24 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RSC_ID")
     private int rid;
+
+    @NotEmpty(message = "Please provide a Resourse Name")
     @Column(name = "RSC_NAME")
     private String rsc_name ;
+
+    @NotEmpty(message = "Please provide a description")
     @Column(name = "RSC_DESC")
     private  String description;
+
+    @NotEmpty(message = "Please provide a Image Link")
     @Column(name = "IMG_LINK")
     private String img_link ;
+
+    @NotEmpty(message = "Please provide a Resourse Link")
     @Column(name = "RSC_LINK")
     private  String rsc_link;
+
+    @NotEmpty(message = "Please provide the resourse button text")
     @Column(name = "RSC_LINK_TEXT")
     private  String rsc_link_text;
 

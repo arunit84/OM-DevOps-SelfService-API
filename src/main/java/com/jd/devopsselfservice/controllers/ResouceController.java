@@ -4,10 +4,10 @@ import com.jd.devopsselfservice.model.Resource;
 import com.jd.devopsselfservice.services.ResouceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.awt.print.Book;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,14 +29,16 @@ public class ResouceController {
         try{
             resource = rService.findById(id);
         }catch (NoSuchElementException ex){
-            throw  new ResourceNotFoundException("Resource/Tool: "+id+ " not found");
+            throw  new ResourceNotFoundException("Get request failed for Resource/Tool with RID : "+id+ " :: Not found in records");
         }
         return resource;
     }
 
     @PostMapping(path="resources")
-    public void saveResource(@RequestBody Resource rsc) {           // POST & url: http://localhost:9099/resources
-        rService.saveResource(rsc);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Resource saveResource(@Valid @RequestBody Resource rsc) {           // POST & url: http://localhost:9099/resources
+
+        return rService.saveResource(rsc);
     }
 
     @DeleteMapping(path="/resources/{id}")   // select delete method in postman and url http://localhost:9099/resources/10
@@ -48,9 +50,5 @@ public class ResouceController {
     public void updateResource(@RequestBody Resource rsc) {     // POST & url: http://localhost:9099/resources
         rService.putResource(rsc);
     }
-
-
-
-
 
 }
